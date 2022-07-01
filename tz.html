@@ -1,0 +1,56 @@
+<script>
+
+function sortString(string){
+    if(typeof string !== 'string') console.log('NOPE');
+    return string.split(" ").sort((a, b) => +a.match(/\d+/)[0] - +b.match(/\d+/)[0])
+}
+console.log('sortString-1: ' + sortString('g5et ski3lls on6 use1 your2 to4 7top'))
+console.log('sortString-2: ' + sortString(''))
+console.log('sortString-3: ' + sortString('practic3 h4rder yo1u 2hould'))
+
+function queueTime({buyers = [], casses = Number}){
+    let subarray = []
+    let freeCass = 1
+    let smalesQue = {}
+    let higestQue = 0
+
+    buyers.forEach((element, i)=>{
+        if(subarray[freeCass-1] === undefined) subarray[freeCass-1] = [buyers[i]]
+        else {
+            subarray.forEach((element, i) => {
+                let queTimeSum = element.reduce((partialSum, a) => partialSum + a, 0)
+                if(!smalesQue.val) smalesQue = { index: i,val: queTimeSum }
+                if(smalesQue.val > queTimeSum) smalesQue = { index: i,val: queTimeSum }   
+            })
+            subarray[smalesQue.index].push(buyers[i])
+            smalesQue = {}  
+        }
+
+        if(freeCass < casses)freeCass++
+        else freeCass = 1
+    })
+    subarray.forEach((element, i)=>{
+        let sum = element.reduce((partialSum, a) => partialSum + a, 0)
+        if(higestQue < sum) higestQue = sum
+    })
+    return higestQue
+}
+
+console.log('queueTime-1: ' + queueTime({buyers:[ 26, 42, 13, 18, 48, 38, 39, 25, 39, 6, 35, 11, 7, 38, 19, 14 ], casses: 1}))
+console.log('queueTime-2: ' + queueTime({buyers:[ 34, 31, 40, 30, 48, 2, 19, 32, 37, 13, 30, 49, 3, 13, 12, 43, 39, 22, 47 ], casses: 4}))
+console.log('queueTime-3: ' + queueTime({buyers:[ 19, 2, 27, 35, 16, 4, 45, 49, 41, 25 ], casses: 5}))
+
+function biggerNumber(number){
+    let newNumber = Array.from(String(number), Number).sort((a, b) => b - a).join('')
+    if(number < +newNumber) return +newNumber
+    return -1      
+}
+
+console.log('biggerNumber-1: ' + biggerNumber(23))
+console.log('biggerNumber-2: ' + biggerNumber(624))
+console.log('biggerNumber-3: ' + biggerNumber(2018))
+console.log('biggerNumber-4: ' + biggerNumber(9))
+console.log('biggerNumber-5: ' + biggerNumber(111))
+console.log('biggerNumber-6: ' + biggerNumber(531))
+
+</script>
